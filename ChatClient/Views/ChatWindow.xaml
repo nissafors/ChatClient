@@ -4,7 +4,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:ViewModels="clr-namespace:ChatClient.ViewModels"
         xmlns:Views="clr-namespace:ChatClient.Views"
-        Title="MainWindow"
+        Title="ChatClient"
         MinHeight="220"
         MinWidth="250"
         Height="525"
