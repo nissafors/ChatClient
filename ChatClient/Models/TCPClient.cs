@@ -48,22 +48,24 @@ namespace ChatClient.Models
         /// </summary>
         public void Connect()
         {
-            ipe = new IPEndPoint(IP, Port);
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-            if (!socket.Connected)
+            if (socket != null && socket.Connected)
             {
-                try
-                {
-                    socket.Connect(ipe);
-                    listen = new Thread(new ThreadStart(messageListener));
-                    listen.Start();
-                    Message = "Connected!";
-                }
-                catch (Exception ex)
-                {
-                    Message = "Error! Failed to connect to server.";
-                }
+                Message = "Disconnect before connecting to a new server!";
+                return;
+            }
+
+            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            ipe = new IPEndPoint(IP, Port);
+            try
+            {
+                socket.Connect(ipe);
+                listen = new Thread(new ThreadStart(messageListener));
+                listen.Start();
+                Message = "Connected!";
+            }
+            catch (Exception ex)
+            {
+                Message = "Error! Failed to connect to server.";
             }
         }
 
