@@ -1,0 +1,71 @@
+﻿<UserControl x:Class="ChatClient.Views.ChatView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="350"
+             d:DesignWidth="525">
+    
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Margin" Value="5"/>
+            </Style.Setters>
+        </Style>
+        <Style TargetType="Button">
+            <Style.Setters >
+                <Setter Property="Margin" Value="5"/>
+                <Setter Property="Padding" Value="5" />
+            </Style.Setters>
+        </Style>
+    </UserControl.Resources>
+    
+    <!-- Main grid -->
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <!-- IP:Port input label/textbox/button. -->
+        <Label HorizontalAlignment="Right" VerticalAlignment="Center">IP:PORT</Label>
+        <TextBox Grid.Column="1" x:Name="AddressTextbox" VerticalContentAlignment="Center" Text="{Binding IP, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding ConnectCommand}" />
+            </TextBox.InputBindings>
+        </TextBox>
+        <Button Grid.Column="2" Name="ConnectButton" Command="{Binding ConnectCommand}">Connect</Button>
+        
+        <!-- Send message label/textbox/button. -->
+        <Label Grid.Row="1" HorizontalAlignment="Right" VerticalAlignment="Center">Message</Label>
+        <TextBox Grid.Row="1" Grid.Column="1" Name="MessageTextbox" VerticalContentAlignment="Center" Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}">
+            <TextBox.InputBindings>
+                <KeyBinding Key="Enter" Command="{Binding SendCommand}" />
+            </TextBox.InputBindings>
+        </TextBox>
+        <Button Grid.Row="1" Grid.Column="2" Name="SendButton" Command="{Binding SendCommand}">Send</Button>
+        
+        <!-- Display messages listbox. -->
+        <ListBox Margin="5" Grid.Row="2" Grid.ColumnSpan="3" x:Name="HistoryListBox"
+                 ItemsSource="{Binding History}" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Message}" HorizontalAlignment="Stretch" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        
+        <!-- Disconnect button. -->
+        <Button Grid.Row="3" Grid.Column="2" Name="Disconnect" Command="{Binding DisconnectCommand}">Disconnect</Button>
+    </Grid>
+</UserControl>
