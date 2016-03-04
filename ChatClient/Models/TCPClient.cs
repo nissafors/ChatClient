@@ -89,7 +89,7 @@ namespace ChatClient.Models
             if (msg == "")
                 return;
             if (socket != null && socket.Connected)
-                socket.Send(Encoding.ASCII.GetBytes(msg));
+                socket.Send(Encoding.UTF8.GetBytes(msg));
             else
                 Message = "Can't send. No connection!";
         }
@@ -118,7 +118,7 @@ namespace ChatClient.Models
                 try
                 {
                     int recCount = socket.Receive(bytes);
-                    string rec = Encoding.ASCII.GetString(bytes, 0, recCount);
+                    string rec = Encoding.UTF8.GetString(bytes, 0, recCount);
                     Application.Current.Dispatcher.Invoke(new Action(() => { Message = rec; }));
                 }
                 catch (Exception e) { }
