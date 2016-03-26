@@ -59,7 +59,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Message}" HorizontalAlignment="Stretch" />
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}" HorizontalAlignment="Stretch" />
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>

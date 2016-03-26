@@ -9,31 +9,18 @@ using System.Net;
 namespace ChatClient.ViewModels
 {
     /// <summary>
-    /// Helper class for data binding in listview items.
-    /// </summary>
-    class MessageString
-    {
-        public string Message { get; set; }
-
-        public MessageString(string message)
-        {
-            Message = message;
-        }
-    }
-
-    /// <summary>
     /// ViewModel for ChatView.xaml.
     /// </summary>
     class ChatClientViewModel : ObservableObject
     {
         private TCPClient tcpClient = new TCPClient();
-        private ObservableCollection<MessageString> history = new ObservableCollection<MessageString>();
+        private ObservableCollection<string> history = new ObservableCollection<string>();
         private string message;
 
         /// <summary>
         /// Get message history.
         /// </summary>
-        public IEnumerable<MessageString> History
+        public IEnumerable<string> History
         {
             get { return history; }
         }
@@ -97,7 +84,7 @@ namespace ChatClient.ViewModels
             var ipAndPort = IP.Split(':');
             if (ipAndPort.Length != 2)
             {
-                history.Insert(0, new MessageString("Error! Address format must be a.b.c.d:port."));
+                history.Insert(0, "Error! Address format must be a.b.c.d:port.");
                 return;
             }
 
@@ -105,14 +92,14 @@ namespace ChatClient.ViewModels
             IPAddress ip;
             if (!IPAddress.TryParse(ipAndPort[0], out ip))
             {
-                history.Insert(0, new MessageString("Error! IP address must have format a.b.c.d."));
+                history.Insert(0, "Error! IP address must have format a.b.c.d.");
                 return;
             }
 
             int port;
             if (!Int32.TryParse(ipAndPort[1], out port) || port > 65535)
             {
-                history.Insert(0, new MessageString("Error! Port bust be an integer between 0 and 65535."));
+                history.Insert(0, "Error! Port bust be an integer between 0 and 65535.");
                 return;
             }
 
@@ -135,7 +122,7 @@ namespace ChatClient.ViewModels
         /// </summary>
         private void tcpClient_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            history.Insert(0, new MessageString(tcpClient.Message));
+            history.Insert(0, tcpClient.Message);
         }
     }
 }
